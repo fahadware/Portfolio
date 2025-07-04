@@ -145,7 +145,12 @@ body {
 h1 {
   font-size: 2rem;
   margin-top: 1rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 1s ease-out forwards;
+  animation-delay: 1s;
 }
+
 
 .tagline {
   font-weight: bold;
@@ -318,3 +323,85 @@ h1 {
     margin-top: 200px;
   }
 }
+
+.circle-img {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  position: relative;
+  z-index: 1;
+
+  /* Entry animation */
+  opacity: 0;
+  transform: scale(0.7) translateY(30px);
+  animation: popIn 1s ease-out forwards, pulseGlow 3s ease-in-out infinite;
+  animation-delay: 0.8s, 1.8s;
+
+  /* Soft white glow (always visible) */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 25px rgba(255, 255, 255, 0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Optional: on hover it grows & rotates slightly */
+.circle-img:hover {
+  transform: scale(1.1) rotate(2deg);
+}
+
+/* Pulsing ring outside the image */
+.circle-img::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  animation: pulseRing 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+/* Entrance animation */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Pulsing glow on the image itself */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 25px rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4), 0 0 35px rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* Pulsing ambient ring */
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+}
+
+
+
+
+

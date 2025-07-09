@@ -12,7 +12,24 @@ function typeTagline() {
   }
 }
 
-window.onload = typeTagline;
+window.onload = function() {
+  typeTagline();
+
+  // Particle effect for Download CV button (now an <a> link)
+  const particleField = document.getElementById('particleFieldCv');
+  if (particleField) {
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.setProperty('--x', `${Math.random() * 200 - 100}px`);
+      particle.style.setProperty('--y', `${Math.random() * 200 - 100}px`);
+      particle.style.animation = `particleFloat ${1 + Math.random() * 2}s infinite`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particleField.appendChild(particle);
+    }
+  }
+};
 
 function toggleSidebar() {
   const sidebar = document.getElementById("sidebar");
@@ -22,7 +39,8 @@ function toggleSidebar() {
     sidebar.style.right = "0px";
   }
 }
- function setGlowColor() {
+
+  function setGlowColor() {
     const hour = new Date().getHours();
     const img = document.querySelector('.circle-img::after');
     const style = document.createElement('style');
@@ -45,4 +63,4 @@ function toggleSidebar() {
     document.head.appendChild(style);
   }
 
-setGlowColor();
+  setGlowColor();

@@ -10,11 +10,16 @@
 html, body {
   height: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body {
+  max-width: 100vw;
 }
 
 /* Background */
 body {
-  background: url('https://img.freepik.com/premium-photo/black-background-with-gold-pattern-words-light-up_644709-66.jpg') no-repeat;
+  background: url('./bg.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   color: #fff;
@@ -236,14 +241,7 @@ h1 {
 
 /* Light sweep animation on button */
 .download-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 150%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-  animation: sweep 3s linear infinite;
+  display: none !important;
 }
 
 @keyframes sweep {
@@ -322,6 +320,13 @@ h1 {
   .container {
     margin-top: 200px;
   }
+  .tagline {
+    white-space: normal;
+    font-size: 1.1rem;
+    max-width: 90vw;
+    overflow-wrap: break-word;
+    text-align: center;
+  }
 }
 
 .circle-img {
@@ -359,7 +364,9 @@ h1 {
   height: calc(100% + 20px);
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.15);
-  animation: pulseRing 3s ease-in-out infinite;
+  /* Remove the pulseRing animation to prevent page pulsing and scrollbars */
+  animation: none !important;
+  transform: none !important;
   z-index: -1;
 }
 
@@ -400,6 +407,141 @@ h1 {
     opacity: 0.4;
   }
 }
+
+.hover-underline {
+  
+  color: #ffffff;
+  position: relative;
+  display: inline-block;
+}
+
+.hover-underline::after,
+.hover-underline::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #00c6fb, #005bea, #00c6fb);
+  box-shadow: 0 0 8px 2px #00c6fb66;
+  bottom: -5px;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease-out;
+}
+
+.hover-underline::before {
+  top: -5px;
+  transform-origin: left;
+}
+
+.hover-underline:hover::after,
+.hover-underline:hover::before {
+  transform: scaleX(1);
+}
+
+/* Only keep magnetic and particle styles for .download-btn */
+.download-btn.magnetic {
+  position: relative;
+  overflow: visible;
+}
+
+.download-btn .particles-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.download-btn .particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.download-btn.magnetic:hover .particles-field {
+  opacity: 1;
+}
+
+.download-btn .fa-download,
+.download-btn span,
+.download-btn {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes particleFloat {
+  0% { transform: translate(var(--x), var(--y)) scale(0); }
+  50% { transform: translate(calc(var(--x) * -1), calc(var(--y) * -1)) scale(1); }
+  100% { transform: translate(var(--x), var(--y)) scale(0); }
+}
+
+.glow-on-hover {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(8px);
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
+    animation: glowing 20s linear infinite;
+    opacity: 1;
+    transition: opacity .3s ease-in-out;
+    border-radius: inherit;
+}
+
+.glow-on-hover:active {
+    color: #000;
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+/* Remove hover opacity so glow is always visible */
+/* .glow-on-hover:hover:before {
+    opacity: 1;
+} */
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
 
 
 

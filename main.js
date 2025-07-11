@@ -64,3 +64,61 @@ function toggleSidebar() {
   }
 
   setGlowColor();
+
+  // Robot interaction with Download CV button
+  const robotContainer = document.getElementById('robotContainer');
+  const downloadBtn = document.getElementById('downloadCvBtn');
+  
+  if (downloadBtn && robotContainer) {
+    let isNearButton = false;
+    let animationTimeout;
+    
+    // Function to check if mouse is near the download button
+    function checkMouseProximity(e) {
+      const btnRect = downloadBtn.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      
+      // Define proximity area (150px around the button)
+      const proximity = 150;
+      
+      const isNear = 
+        mouseX >= btnRect.left - proximity &&
+        mouseX <= btnRect.right + proximity &&
+        mouseY >= btnRect.top - proximity &&
+        mouseY <= btnRect.bottom + proximity;
+      
+      if (isNear && !isNearButton) {
+        // Mouse entered proximity area
+        isNearButton = true;
+        robotContainer.classList.add('visible');
+        
+        // Clear any existing timeout
+        if (animationTimeout) {
+          clearTimeout(animationTimeout);
+        }
+        
+      } else if (!isNear && isNearButton) {
+        // Mouse left proximity area
+        isNearButton = false;
+        
+        // Hide robot immediately when mouse leaves
+        robotContainer.classList.remove('visible');
+        
+        if (animationTimeout) {
+          clearTimeout(animationTimeout);
+        }
+      }
+    }
+    
+    // Add mouse move listener
+    document.addEventListener('mousemove', checkMouseProximity);
+    
+    // Add click listener for extra excitement
+    downloadBtn.addEventListener('click', () => {
+      robotContainer.classList.add('excited');
+      setTimeout(() => {
+        robotContainer.classList.remove('excited');
+      }, 1000);
+    });
+  }

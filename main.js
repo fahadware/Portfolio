@@ -1,6 +1,6 @@
 // Typing effect for tagline
 const tagline =
-  "| Aspiring Fullstack Engineer | Passionate about DevOps & AI/ML.";
+  "| Aspiring Next-Gen Fullstack Engineer | Passionate about DevOps & AI/ML.";
 const taglineElement = document.getElementById("tagline");
 let index = 0;
 

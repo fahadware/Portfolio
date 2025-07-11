@@ -45,7 +45,6 @@ body {
   animation-delay: 0.2s;
 }
 
-/* Continuous sweeping gradient on navbar */
 .header::before {
   content: '';
   position: absolute;
@@ -58,15 +57,9 @@ body {
 }
 
 @keyframes headerSweep {
-  0% {
-    left: -100%;
-  }
-  50% {
-    left: 100%;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
 }
 
 /* Logo */
@@ -90,7 +83,7 @@ body {
   color: #f00;
 }
 
-/* Hamburger (hidden by default) */
+/* Hamburger */
 .hamburger {
   display: none;
   font-size: 1.8rem;
@@ -156,7 +149,6 @@ h1 {
   animation-delay: 1s;
 }
 
-
 .tagline {
   font-weight: bold;
   margin-top: 0.5rem;
@@ -167,17 +159,97 @@ h1 {
   border-right: 2px solid #ddd;
 }
 
-/* Profile image */
+.avatar-ring {
+  width: 190px;
+  height: 190px;
+  position: relative;
+  display: inline-block;
+  animation: popIn 1s ease-out forwards;
+  animation-delay: 0.8s;
+  transform: scale(0.7) translateY(30px);
+  opacity: 0;
+}
+
+.avatar-ring::before,
+.avatar-ring::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  opacity: 0.5;
+  pointer-events: none;
+  animation: pulse-ring 2s ease-out infinite, cycle-colors 6s linear infinite;
+  box-shadow: 0 0 12px hsl(185, 100%, 60%); /* 🔥 Add this line */
+}
+
+
+.avatar-ring::before {
+  animation: pulse-ring 2s ease-out infinite, cycle-colors 6s linear infinite;
+}
+
+.avatar-ring::after {
+  animation: pulse-ring 2s ease-out infinite 0.5s, cycle-colors 6s linear infinite 0.5s;
+}
+
+/* Hover */
+.avatar-ring:hover::before,
+.avatar-ring:hover::after {
+  opacity: 0.8;
+}
+
+
+/* Profile image with pulsing ring animation */
 .circle-img {
   width: 190px;
   height: 190px;
-  border-radius: 50%;
+  border-radius: 9999px;
   object-fit: cover;
   border: 3px solid white;
   opacity: 0;
   transform: scale(0.7) translateY(30px);
   animation: popIn 1s ease-out forwards;
   animation-delay: 0.8s;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Pulsing ring animation using pseudo-elements */
+.circle-img::before,
+.circle-img::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.circle-img::before {
+  animation: pulse-ring 2s ease-out infinite, cycle-colors 6s linear infinite;
+}
+
+.circle-img::after {
+  animation: pulse-ring 2s ease-out infinite 0.5s, cycle-colors 6s linear infinite 0.5s;
+}
+
+/* Hover effects */
+.circle-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.circle-img:hover::before,
+.circle-img:hover::after {
+  opacity: 0.8;
 }
 
 /* Social icons */
@@ -218,7 +290,7 @@ h1 {
   align-items: center;
   gap: 8px;
   margin-top: 1.5rem;
-  padding: 5px ;
+  padding: 5px;
   font-size: 0.95rem;
   color: #fff;
   background: rgba(255,255,255,0.1);
@@ -239,21 +311,8 @@ h1 {
   font-size: 1.2rem;
 }
 
-/* Light sweep animation on button */
 .download-btn::before {
   display: none !important;
-}
-
-@keyframes sweep {
-  0% {
-    left: -150%;
-  }
-  50% {
-    left: 100%;
-  }
-  100% {
-    left: 100%;
-  }
 }
 
 .download-btn:hover {
@@ -306,7 +365,31 @@ h1 {
   }
 }
 
-/* Responsive for mobile */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes cycle-colors {
+  0%, 100% {
+    border-color: hsl(185, 100%, 50%);
+  }
+  50% {
+    border-color: hsl(185, 100%, 70%);
+  }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .header {
     padding: 20px 40px;
@@ -327,89 +410,21 @@ h1 {
     overflow-wrap: break-word;
     text-align: center;
   }
-}
-
-.circle-img {
-  width: 190px;
-  height: 190px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid white;
-  position: relative;
-  z-index: 1;
-
-  /* Entry animation */
-  opacity: 0;
-  transform: scale(0.7) translateY(30px);
-  animation: popIn 1s ease-out forwards, pulseGlow 3s ease-in-out infinite;
-  animation-delay: 0.8s, 1.8s;
-
-  /* Soft white glow (always visible) */
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 25px rgba(255, 255, 255, 0.15);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-/* Optional: on hover it grows & rotates slightly */
-.circle-img:hover {
-  transform: scale(1.1) rotate(2deg);
-}
-
-/* Pulsing ring outside the image */
-.circle-img::after {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  width: calc(100% + 20px);
-  height: calc(100% + 20px);
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  /* Remove the pulseRing animation to prevent page pulsing and scrollbars */
-  animation: none !important;
-  transform: none !important;
-  z-index: -1;
-}
-
-/* Entrance animation */
-@keyframes popIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.7) translateY(30px);
+  .circle-img {
+    width: 150px;
+    height: 150px;
   }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
+  .circle-img::before,
+  .circle-img::after {
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
   }
 }
 
-/* Pulsing glow on the image itself */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 25px rgba(255, 255, 255, 0.15);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4), 0 0 35px rgba(255, 255, 255, 0.25);
-  }
-}
-
-/* Pulsing ambient ring */
-@keyframes pulseRing {
-  0% {
-    transform: scale(1);
-    opacity: 0.4;
-  }
-  50% {
-    transform: scale(1.3);
-    opacity: 0.15;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0.4;
-  }
-}
-
+/* Extra */
 .hover-underline {
-  
   color: #ffffff;
   position: relative;
   display: inline-block;
@@ -459,9 +474,10 @@ h1 {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: #fff;
+  background: hsl(185, 100%, 50%);
   border-radius: 50%;
   z-index: 0;
+  animation: cycle-colors 6s linear infinite;
 }
 
 .download-btn.magnetic:hover .particles-field {
@@ -480,70 +496,3 @@ h1 {
   50% { transform: translate(calc(var(--x) * -1), calc(var(--y) * -1)) scale(1); }
   100% { transform: translate(var(--x), var(--y)) scale(0); }
 }
-
-.glow-on-hover {
-    width: 220px;
-    height: 50px;
-    border: none;
-    outline: none;
-    color: #fff;
-    background: #111;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
-    border-radius: 10px;
-}
-
-.glow-on-hover:before {
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(8px);
-    width: calc(100% + 12px);
-    height: calc(100% + 12px);
-    animation: glowing 20s linear infinite;
-    opacity: 1;
-    transition: opacity .3s ease-in-out;
-    border-radius: inherit;
-}
-
-.glow-on-hover:active {
-    color: #000;
-}
-
-.glow-on-hover:active:after {
-    background: transparent;
-}
-
-/* Remove hover opacity so glow is always visible */
-/* .glow-on-hover:hover:before {
-    opacity: 1;
-} */
-
-.glow-on-hover:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #111;
-    left: 0;
-    top: 0;
-    border-radius: 10px;
-}
-
-@keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-
-
-
-
-
-

@@ -496,3 +496,76 @@ h1 {
   50% { transform: translate(calc(var(--x) * -1), calc(var(--y) * -1)) scale(1); }
   100% { transform: translate(var(--x), var(--y)) scale(0); }
 }
+
+/* CV Button Container */
+.cv-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Lottie Robot Animation Styles */
+.robot-container {
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.robot-container dotlottie-wc {
+  display: block;
+  transform: scale(0.8) translateY(20px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 0 20px rgba(0, 150, 255, 0.3));
+}
+
+/* Robot Animation States */
+.robot-container.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.robot-container.visible dotlottie-wc {
+  transform: scale(1) translateY(0px);
+  animation: robotPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes robotPop {
+  0% {
+    transform: scale(0.3) translateY(30px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) translateY(-5px);
+  }
+  100% {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+  }
+}
+
+/* Lottie Robot Animation States */
+.robot-container.excited dotlottie-wc {
+  animation: robotPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), robotShake 0.3s ease-in-out infinite;
+}
+
+@keyframes robotShake {
+  0%, 100% { transform: scale(1) translateY(0px); }
+  25% { transform: scale(1.05) translateY(-3px); }
+  75% { transform: scale(1.05) translateY(-3px); }
+}
+
+/* Mobile Responsive for Robot */
+@media (max-width: 768px) {
+  .robot-container {
+    bottom: -80px;
+  }
+  
+  .robot-container dotlottie-wc {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}
